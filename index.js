@@ -1,5 +1,3 @@
-import {getTimeFor} from "./timeUtils"
-
 const getTasksFromStore = () => {
     const storage = localStorage.getItem('tasks')
     return !!storage ? new Map(JSON.parse(storage)) : new Map()
@@ -9,7 +7,22 @@ const putTaskInStore = (tasks) => {
     localStorage.setItem('tasks', JSON.stringify(Array.from(tasks)))
 }
 
+const getTimeFor = (timerName, timeValue) => {
+    const month = ['Jan', "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
+    const timers = {
+        start: new Date(timeValue),
+        end: new Date(timeValue),
+        spend: new Date(timeValue)
+    }
+
+    return `
+        ${timers[timerName].getDate()} 
+        ${month[timers[timerName].getMonth()]} 
+        ${timers[timerName].getFullYear()}  
+        ${timers[timerName].getHours()}:${timers[timerName].getMinutes()}
+    `
+}
 
 const getTimeDiff = (start, end) => {
     const diff = new Date(end) - new Date(start)
